@@ -1,15 +1,16 @@
 import * as React from 'react'
-import { ConnectDragPreview } from '../interfaces'
+import { ConnectDragPreview, DragPreviewOptions } from '../interfaces'
 
 export interface DragPreviewImageProps {
 	connect: ConnectDragPreview
-	src: string
+	src: string,
+	options: DragPreviewOptions
 }
 /*
  * A utility for rendering a drag preview image
  */
 export const DragPreviewImage: React.FC<DragPreviewImageProps> = React.memo(
-	({ connect, src }) => {
+	({ connect, src, options }) => {
 		React.useEffect(() => {
 			if (typeof Image === 'undefined') return
 
@@ -17,7 +18,7 @@ export const DragPreviewImage: React.FC<DragPreviewImageProps> = React.memo(
 			const img = new Image()
 			img.src = src
 			img.onload = () => {
-				connect(img)
+				connect(img, options)
 				connected = true
 			}
 			return () => {
